@@ -4,12 +4,33 @@
 *.dll
 *.so
 *.dylib
-
 # Test binary, built with `go test -c`
 *.test
-
+# Profiles
+*.prof
+# MacOS extended attributes
+._*
+# MacOS Desktop Services Store
+.DS_Store
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
+# Compiled Files
+bin/
+# git history files
+.history_rewritten_*
+# Eclipse artifacts
+.project
+# Intellij
+*.iml
+.idea/
+.run/
+# Visual Studio Code
+.vscode/
+# vi swap files
+.*.swp
+# vi backups
+*.bak
+# common backups
+*~

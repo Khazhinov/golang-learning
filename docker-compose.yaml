@@ -1,0 +1,35 @@
+version: '3.9'
+
+networks:
+  golang-learning-databases-network:
+    name: golang-learning-databases-network
+    driver: bridge
+
+volumes:
+  golang-learning-redis-volume:
+  golang-learning-postgres-database-volume:
+
+services:
+  redis:
+    image: redislabs/rejson:2.4.3
+    container_name: golang-learning-redis
+    restart: always
+    ports: ["9376:6379"]
+    volumes:
+      - golang-learning-redis-volume:/data
+    networks:
+      - golang-learning-databases-network
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: golang-learning-postgres
+    restart: always
+    ports: ["2435:5432"]
+    environment:
+      POSTGRES_DB: golang-learning
+      POSTGRES_USER: golang-learning
+      POSTGRES_PASSWORD: golang-learning
+    volumes:
+      - golang-learning-postgres-database-volume:/var/lib/postgresql/data
+    networks:
+      - golang-learning-databases-network
