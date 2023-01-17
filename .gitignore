@@ -16,8 +16,6 @@
 *.out
 # Dependency directories (remove the comment below to include it)
 vendor/
-# Compiled Files
-bin/
 # git history files
 .history_rewritten_*
 # Eclipse artifacts
@@ -34,3 +32,6 @@ bin/
 *.bak
 # common backups
 *~
+*.pid
+*-stderr.txt
+.env

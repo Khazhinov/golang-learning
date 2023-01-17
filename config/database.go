@@ -1,8 +1,4 @@
-package configs
-
-type Config struct {
-	Database DatabaseConnectionConfig `yaml:"database"`
-}
+package config
 
 type DatabaseConnectionConfig struct {
 	Host     string `yaml:"host" envconfig:"DB_HOST"`
@@ -10,8 +6,4 @@ type DatabaseConnectionConfig struct {
 	Username string `yaml:"username" envconfig:"DB_USERNAME"`
 	Password string `yaml:"password" envconfig:"DB_PASSWORD"`
 	Database string `yaml:"database" envconfig:"DB_DATABASE"`
-}
-
-func NewConfig() *Config {
-	return &Config{}
 }

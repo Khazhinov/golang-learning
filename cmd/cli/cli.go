@@ -1,13 +1,13 @@
 package main
 
 import (
-	"golang-learning/configs"
+	"golang-learning/config"
 	"golang-learning/internal/foundation/configurator"
 	"golang-learning/internal/helper"
 )
 
 func main() {
-	config := configs.NewConfig()
+	config := config.NewConfig()
 	configurator.ReadYaml(config)
 	configurator.ReadEnvironment(config)
 
