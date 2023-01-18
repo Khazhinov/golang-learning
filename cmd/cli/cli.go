@@ -1,15 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"golang-learning/config"
 	"golang-learning/internal/foundation/configurator"
-	"golang-learning/internal/helper"
+	"os"
 )
 
 func main() {
 	config := config.NewConfig()
-	configurator.ReadYaml(config)
-	configurator.ReadEnvironment(config)
+	//configurator.ReadYaml(config)
+	configurator.ReadDefaultValues(config)
 
-	helper.DD(config.Database.Host)
+	fmt.Println(config.Database.Host)
+
+	os.Exit(0)
 }

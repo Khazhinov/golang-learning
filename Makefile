@@ -17,8 +17,13 @@ include .env
 export
 endif
 
+restart: stop start
 start: compile start-server
 stop: stop-server
+
+start-cli: compile
+	$(eval CLI_BIN := $(wildcard ./bin/cli*))
+	@-$(CLI_BIN)
 
 start-server: load-env
 	@echo ">  $(PROJECTNAME) is available at http://$(APP_HOST):$(APP_PORT)";
