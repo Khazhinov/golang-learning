@@ -10,8 +10,9 @@ import (
 func main() {
 	http.HandleFunc("/", HelloServer)
 	config := config.NewConfig()
-	configurator.ReadYaml(config)
+	configurator.ReadDefaultValues(config)
 	configurator.ReadEnvironment(config)
+
 	http.ListenAndServe(fmt.Sprintf("%s:%s", config.Application.Host, config.Application.Port), nil)
 }
 

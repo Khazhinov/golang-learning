@@ -9,8 +9,8 @@ import (
 
 func main() {
 	config := config.NewConfig()
-	//configurator.ReadYaml(config)
 	configurator.ReadDefaultValues(config)
+	configurator.ReadEnvironment(config)
 
 	fmt.Println(config.Database.Host)
 

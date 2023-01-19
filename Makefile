@@ -2,14 +2,17 @@ PROJECTNAME=$(shell basename "$(PWD)")
 DIR=$(shell pwd)
 GOBIN=$(DIR)/bin
 
-# Redirect error output to a file, so we can show it in development mode.
+# Redirect error output to a file, so we can show it in development mode
 STDERR=.$(PROJECTNAME)-stderr.txt
 
 # PID file will keep the process id of the server
 PID=.$(PROJECTNAME).pid
 
-# Make is verbose in Linux. Make it silent.
+# Make is verbose in Linux. Make it silent
 MAKEFLAGS += --silent
+
+default: help
+all: help
 
 load-env:
 ifneq ("$(wildcard ./.env)","")
@@ -17,13 +20,26 @@ include .env
 export
 endif
 
-restart: stop start
+## start: Start Server in background
 start: compile start-server
+
+## stop: Stop Server in background
 stop: stop-server
 
-start-cli: compile
+## restart: Restart Server in background
+restart: stop start
+
+## cli: Start CLI
+cli: load-env compile
+	@echo "> Start CLI"
 	$(eval CLI_BIN := $(wildcard ./bin/cli*))
 	@-$(CLI_BIN)
+
+## server: Start Server
+server: load-env compile
+	@echo "> Start Server"
+	$(eval SERVER_BIN := $(wildcard ./bin/server*))
+	@-$(SERVER_BIN)
 
 start-server: load-env
 	@echo ">  $(PROJECTNAME) is available at http://$(APP_HOST):$(APP_PORT)";
@@ -38,9 +54,7 @@ stop-server:
 
 restart-server: stop-server start-server
 
-watch:
-	@GOBIN=$(GOBIN) yolo -i . -e vendor -e bin -c "$(run)"
-
+## compile: Compile all modules
 compile:
 	@touch $(STDERR)
 	@rm $(STDERR)
@@ -48,7 +62,11 @@ compile:
 	@cat $(STDERR) 1>&2
 	@rm $(STDERR)
 
-go-compile: go-clean go-mod-vendor go-build
+go-compile: go-clean go-mod-vendor go-generate go-build
+
+go-generate:
+	@echo "> Building default config values"
+	@go generate
 
 go-build:
 	@echo "> Building apps:"
@@ -67,7 +85,6 @@ go-clean:
 	GOBIN=$(GOBIN) go clean
 
 .PHONY: help
-all: help
 help: Makefile
 	@echo
 	@echo " Choose a command run in "$(PROJECTNAME)":"
